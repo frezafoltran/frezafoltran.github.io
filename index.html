@@ -94,6 +94,23 @@
 
     <script src="js/production.js"></script>
 
+    <script>
+        var detectBannerContent = function(){
+            return function(){
+                // Check if the page contains the div
+                var node = document.getElementById("ora-root"); // use whatever id your block has
+                isInBody = document.body.contains(node);
+            
+                // If true
+                if (isInBody){
+                    dataLayer.push({'event':'spContent-detected'});
+                }
+            }
+        }
+
+        detectBannerContent(); 
+    </script>
+
     </body>
 </html>
 
