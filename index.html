@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>My Portfolio</title>
+    <link rel="icon" type="image/png" href="/assets/much_to_say.png" />
+    <title>much to say</title>
 
-    <!-- Fonts & Icons -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
       rel="stylesheet"
@@ -15,7 +15,6 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
 
-    <!-- Styles -->
     <link rel="stylesheet" href="css/style.css" />
   </head>
 
@@ -23,15 +22,12 @@
     <div data-include="partials/header.html"></div>
 
     <main class="container">
-      <section id="articles" class="articles-grid" aria-live="polite">
-        <!-- JS will render article cards here by reading articles.json -->
-      </section>
+      <section id="articles" class="articles-grid" aria-live="polite"></section>
     </main>
 
     <script src="js/include.js"></script>
     <script src="js/markdown.js"></script>
     <script>
-      // Request the index from markdown.js
       renderIndex("/articles.json", document.getElementById("articles"));
     </script>
   </body>
