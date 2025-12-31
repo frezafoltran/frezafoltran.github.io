@@ -174,8 +174,7 @@ input:checked + .slider:before {
 @media (max-width: 640px) {
   .article-page {
     margin: 0.5rem;
-    padding: 1rem;
-    border-radius: 16px;
+    width: 100%;
   }
 }
 
