@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   --bg-color: #ffffff;
   --card-bg: #e1e1e1;
@@ -173,7 +179,6 @@ input:checked + .slider:before {
 
 @media (max-width: 640px) {
   .article-page {
-    margin: 0.5rem;
     width: 100%;
   }
 }
