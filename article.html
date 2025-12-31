@@ -33,13 +33,15 @@
     <script>
       // Determine slug from ?post=slug. If not present, optionally check path-based slugs.
       const params = new URLSearchParams(location.search);
+      const githubRawArticles =
+        "https://raw.githubusercontent.com/frezafoltran/frezafoltran.github.io/refs/heads/main/articles";
       const slug = params.get("post");
       if (!slug) {
         document.getElementById("article-root").innerHTML =
           "<p>No article specified. Use <code>?post=slug</code>.</p>";
       } else {
         renderArticle(
-          `/articles/${slug}.md`,
+          `${githubRawArticles}/${slug}.md`,
           document.getElementById("article-root")
         );
       }
