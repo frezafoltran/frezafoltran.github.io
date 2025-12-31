@@ -1,6 +1,4 @@
-// markdown.js
 // Uses: marked (marked.min.js), js-yaml (js-yaml.min.js), DOMPurify (purify.min.js)
-// We'll load the CDNs dynamically if not already present.
 
 async function ensureLibs() {
   const libs = [];
@@ -34,8 +32,24 @@ function loadScript(src) {
   });
 }
 
+function formatToDayOfYear(dateInput) {
+  if (!dateInput) return "";
+
+  const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
+
+  if (isNaN(date.getTime())) return String(dateInput);
+
+  const year = date.getUTCFullYear();
+  const startOfYear = Date.UTC(year, 0, 0);
+  const diff = date.getTime() - startOfYear;
+  const oneDay = 1000 * 60 * 60 * 24;
+
+  const dayOfYear = Math.floor(diff / oneDay);
+
+  return `day ${dayOfYear} of ${year}`;
+}
+
 function parseFrontMatter(text) {
-  // front matter between leading --- and next --- ; rest is markdown
   if (text.startsWith("---")) {
     const idx = text.indexOf("---", 3);
     if (idx !== -1) {
@@ -63,18 +77,11 @@ async function renderArticle(mdPath, container) {
     const raw = await res.text();
     const { fm, md } = parseFrontMatter(raw);
 
-    // Convert markdown to HTML
     const html = marked.parse(md);
-
-    // Build article shell
     const title = fm.title || fm.title === "" ? fm.title : "Untitled";
-    const date = fm.date
-      ? new Date(fm.date).toLocaleDateString(undefined, {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })
-      : "";
+
+    // FIX 1: Apply ordinal formatting here
+    const date = formatToDayOfYear(fm.date);
 
     const img = fm.image
       ? `<div class="featured-img"><img src="${fm.image}" alt="${
@@ -85,25 +92,10 @@ async function renderArticle(mdPath, container) {
     const profileLinks = fm.is_about_page
       ? `
          <div class="profile-links">
-          <!-- Replace href values with your actual URLs -->
-          <a href="docs/resume.pdf" aria-label="Resume" title="Resume">
-            <img src="/assets/profile.svg" alt="Resume" />
-          </a>
-
-          <a
-            href="https://www.linkedin.com/in/joao-foltran/"
-            target="_blank"
-            rel="noopener"
-            ><i class="fa-brands fa-linkedin"></i
-          ></a>
-          <a
-            href="https://github.com/frezafoltran"
-            target="_blank"
-            rel="noopener"
-            ><i class="fa-brands fa-github"></i
-          ></a>
-        </div>
-      `
+          <a href="docs/resume.pdf" aria-label="Resume" title="Resume"><img src="/assets/profile.svg" alt="Resume" /></a>
+          <a href="https://www.linkedin.com/in/joao-foltran/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="https://github.com/frezafoltran" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+        </div>`
       : "";
 
     const articleHtml = `
@@ -113,10 +105,9 @@ async function renderArticle(mdPath, container) {
       ${img}
       <div class="article-body">${DOMPurify.sanitize(html)}</div>
       ${profileLinks}
-    </div>
-    `;
+    </div>`;
+
     container.innerHTML = articleHtml;
-    // Update document title
     document.title =
       (title ? title + " • " : "") + (document.title || "My Portfolio");
   } catch (err) {
@@ -134,9 +125,6 @@ function escapeHtml(s) {
   );
 }
 
-// Renders index cards from a JSON index.
-// articlesJsonPath: path to articles.json
-// container: DOM element to populate
 async function renderIndex(articlesJsonPath, container) {
   await ensureLibs();
   try {
@@ -150,20 +138,18 @@ async function renderIndex(articlesJsonPath, container) {
       container.innerHTML = `<p>No articles yet.</p>`;
       return;
     }
-    // Build cards (sorted by date desc)
+
     list.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
     container.innerHTML = list
       .map((item) => {
         const imgStyle = item.thumbnail
           ? `style="background-image:url('${item.thumbnail}')" `
           : "";
-        const date = item.date
-          ? new Date(item.date).toLocaleDateString(undefined, {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })
-          : "";
+
+        // FIX 2: Apply ordinal formatting here
+        const date = formatToDayOfYear(item.date);
+
         return `
         <a class="article-card" href="article.html?post=${encodeURIComponent(
           item.slug
@@ -175,8 +161,7 @@ async function renderIndex(articlesJsonPath, container) {
               item.title || item.slug
             )}</h2>
           </div>
-        </a>
-      `;
+        </a>`;
       })
       .join("");
   } catch (err) {
@@ -184,6 +169,5 @@ async function renderIndex(articlesJsonPath, container) {
   }
 }
 
-// export functions for inline usage
 window.renderArticle = renderArticle;
 window.renderIndex = renderIndex;

@@ -53,6 +53,8 @@ def date_key(it):
 
 items.sort(key=date_key, reverse=True)
 
+os.remove(OUT_FILE)
+
 with open(OUT_FILE, 'w', encoding='utf8') as out:
     json.dump(items, out, indent=2, ensure_ascii=False)
 
