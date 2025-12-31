@@ -75,10 +75,35 @@ async function renderArticle(mdPath, container) {
           day: "numeric",
         })
       : "";
+
     const img = fm.image
       ? `<div class="featured-img"><img src="${fm.image}" alt="${
           fm.image_alt || title
         }" loading="lazy"/></div>`
+      : "";
+
+    const profileLinks = fm.is_about_page
+      ? `
+         <div class="profile-links">
+          <!-- Replace href values with your actual URLs -->
+          <a href="docs/resume.pdf" aria-label="Resume" title="Resume">
+            <img src="/assets/profile.svg" alt="Resume" />
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/joao-foltran/"
+            target="_blank"
+            rel="noopener"
+            ><i class="fa-brands fa-linkedin"></i
+          ></a>
+          <a
+            href="https://github.com/frezafoltran"
+            target="_blank"
+            rel="noopener"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+        </div>
+      `
       : "";
 
     const articleHtml = `
@@ -87,6 +112,7 @@ async function renderArticle(mdPath, container) {
       <h1>${escapeHtml(title)}</h1>
       ${img}
       <div class="article-body">${DOMPurify.sanitize(html)}</div>
+      ${profileLinks}
     </div>
     `;
     container.innerHTML = articleHtml;
@@ -128,8 +154,8 @@ async function renderIndex(articlesJsonPath, container) {
     list.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
     container.innerHTML = list
       .map((item) => {
-        const imgStyle = item.image
-          ? `style="background-image:url('${item.image}')" `
+        const imgStyle = item.thumbnail
+          ? `style="background-image:url('${item.thumbnail}')" `
           : "";
         const date = item.date
           ? new Date(item.date).toLocaleDateString(undefined, {

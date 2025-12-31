@@ -37,7 +37,9 @@ for fname in os.listdir(ART_DIR):
         "slug": slug,
         "title": fm.get("title", slug),
         "date": date_value,
-        "image": fm.get("image", "")
+        "image": fm.get("image", ""),
+        "thumbnail": fm.get("thumbnail", "")
+
     }
 
     items.append(item)
