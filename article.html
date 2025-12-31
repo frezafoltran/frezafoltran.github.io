@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>My Portfolio</title>
+    <title>Article • My Portfolio</title>
 
     <!-- Fonts & Icons -->
     <link
@@ -23,16 +23,26 @@
     <div data-include="partials/header.html"></div>
 
     <main class="container">
-      <section id="articles" class="articles-grid" aria-live="polite">
-        <!-- JS will render article cards here by reading articles.json -->
-      </section>
+      <article id="article-root" class="article-root">
+        <!-- Rendered article will be injected here -->
+      </article>
     </main>
 
     <script src="js/include.js"></script>
     <script src="js/markdown.js"></script>
     <script>
-      // Request the index from markdown.js
-      renderIndex("/articles.json", document.getElementById("articles"));
+      // Determine slug from ?post=slug. If not present, optionally check path-based slugs.
+      const params = new URLSearchParams(location.search);
+      const slug = params.get("post");
+      if (!slug) {
+        document.getElementById("article-root").innerHTML =
+          "<p>No article specified. Use <code>?post=slug</code>.</p>";
+      } else {
+        renderArticle(
+          `/articles/${slug}.md`,
+          document.getElementById("article-root")
+        );
+      }
     </script>
   </body>
 </html>
