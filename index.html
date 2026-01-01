@@ -22,11 +22,12 @@
     <div data-include="partials/header.html"></div>
 
     <main class="container">
-      <section id="articles" class="articles-grid" aria-live="polite"></section>
+      <section id="articles" aria-live="polite"></section>
     </main>
 
     <script src="js/include.js"></script>
     <script src="js/markdown.js"></script>
+    <script src="js/markdownHome.js"></script>
     <script>
       renderIndex("/articles.json", document.getElementById("articles"));
     </script>

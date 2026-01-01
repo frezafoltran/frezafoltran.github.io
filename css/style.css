@@ -10,7 +10,9 @@
   --subtle-text: #808080;
   --text-color: #333333;
   --accent-color: #d81466;
+  --accent-color-translucent: #d81466c9;
   --header-bg: rgba(255, 255, 255, 0.8);
+  --header-height: 54px;
 }
 
 [data-theme="dark"] {
@@ -38,6 +40,7 @@ body {
 .main-header {
   display: flex;
   justify-content: space-between;
+  height: var(--header-height);
   align-items: center;
   padding: 1rem;
   background: var(--header-bg);
@@ -139,14 +142,6 @@ input:checked + .slider:before {
 /* Ensure main content doesn't jump under sticky header */
 .container {
   margin-top: 2rem;
-}
-
-/* grid */
-.articles-grid {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  margin: 1rem;
 }
 
 .article-card {
@@ -269,4 +264,37 @@ input:checked + .slider:before {
 .profile-links .btn:hover {
   transform: translateY(-3px);
   opacity: 0.95;
+}
+
+.week-row {
+  width: 100%;
+  margin-bottom: 4rem;
+}
+
+.week-sticky-header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: var(--header-height);
+  z-index: 900;
+  padding-left: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.week-sticky-header h3 {
+  display: inline-block;
+  margin: 0;
+  padding: 4px 10px;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  color: var(--text-color);
+  text-transform: uppercase;
+  background-color: var(--accent-color-translucent);
+  border-radius: 4px;
+}
+
+.week-grid {
+  display: grid;
+  margin: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
 }
