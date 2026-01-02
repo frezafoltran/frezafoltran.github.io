@@ -33,7 +33,8 @@
     <script src="js/markdownJournals.js"></script>
     <script>
       const params = new URLSearchParams(location.search);
-      const githubRawArticles = "articles";
+      const githubRawArticles =
+        "https://raw.githubusercontent.com/frezafoltran/frezafoltran.github.io/refs/heads/main/articles";
       const slug = params.get("post");
       if (!slug) {
         document.getElementById("article-root").innerHTML =
