@@ -220,12 +220,12 @@ input:checked + .slider:before {
 
 .article-root h1 {
   font-size: clamp(1.6rem, 5vw, 2.2rem);
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .article-root h2 {
   font-size: clamp(1.2rem, 4vw, 1.5rem);
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 .featured-img {
   display: inline-block;

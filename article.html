@@ -32,16 +32,23 @@
     <script src="js/markdown.js"></script>
     <script src="js/markdownJournals.js"></script>
     <script>
+      function isLocal() {
+        return (
+          location.hostname === "localhost" || location.hostname === "127.0.0.1"
+        );
+      }
+
       const params = new URLSearchParams(location.search);
-      const githubRawArticles =
-        "https://raw.githubusercontent.com/frezafoltran/frezafoltran.github.io/refs/heads/main/articles";
+      const rootArticles = isLocal()
+        ? ""
+        : "https://raw.githubusercontent.com/frezafoltran/frezafoltran.github.io/refs/heads/main";
       const slug = params.get("post");
       if (!slug) {
         document.getElementById("article-root").innerHTML =
           "<p>No article specified. Use <code>?post=slug</code>.</p>";
       } else {
         renderArticle(
-          `${githubRawArticles}/${slug}.md`,
+          `${rootArticles}/articles/${slug}.md`,
           document.getElementById("article-root")
         );
       }
