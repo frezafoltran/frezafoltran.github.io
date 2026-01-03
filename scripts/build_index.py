@@ -22,13 +22,25 @@ def parse_front_matter(text):
 
 items = []
 for fname in os.listdir(ART_DIR):
-    if not fname.endswith('.md'): continue
+    if not fname.endswith('.md'):
+        continue
     path = os.path.join(ART_DIR, fname)
     with open(path, 'r', encoding='utf8') as f:
         text = f.read()
+
     fm = parse_front_matter(text)
     slug = os.path.splitext(fname)[0]
- 
+
+    # Remove front matter from text to get only article body
+    body_text = text
+    if text.startswith('---'):
+        parts = text.split('---', 2)
+        if len(parts) >= 3:
+            body_text = parts[2].strip()
+
+    # Count words: split by whitespace
+    num_words = len(re.findall(r'\S+', body_text))
+
     date_value = fm.get("date", "")
     if hasattr(date_value, "isoformat"):
         date_value = date_value.isoformat()
@@ -38,11 +50,12 @@ for fname in os.listdir(ART_DIR):
         "title": fm.get("title", slug),
         "date": date_value,
         "image": fm.get("image", ""),
-        "thumbnail": fm.get("thumbnail", "")
-
+        "thumbnail": fm.get("thumbnail", ""),
+        "num_words": num_words
     }
 
     items.append(item)
+
 
 # sort by date desc if possible
 def date_key(it):

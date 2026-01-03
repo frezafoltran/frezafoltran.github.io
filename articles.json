@@ -4,27 +4,31 @@
     "title": "Marty Supreme",
     "date": "2026-01-03",
     "image": "/assets/zion.png",
-    "thumbnail": "/assets/zion.png"
+    "thumbnail": "/assets/zion.png",
+    "num_words": 0
   },
   {
     "slug": "what-is-wav",
     "title": "What is .wav?",
     "date": "2026-01-02",
     "image": "/assets/zion.png",
-    "thumbnail": "/assets/zion.png"
+    "thumbnail": "/assets/zion.png",
+    "num_words": 148
   },
   {
     "slug": "can-u-spot-the-snare",
     "title": "Can u spot the snare?",
     "date": "2026-01-01",
     "image": "/assets/fourier-funk.png",
-    "thumbnail": "/assets/fourier-funk.png"
+    "thumbnail": "/assets/fourier-funk.png",
+    "num_words": 249
   },
   {
     "slug": "is-it-worth-keeping-a-journal",
     "title": "Is it worth keeping a journal?",
     "date": "2025-12-31",
     "image": "",
-    "thumbnail": "/assets/mystery-tour.png"
+    "thumbnail": "/assets/mystery-tour.png",
+    "num_words": 48
   }
 ]

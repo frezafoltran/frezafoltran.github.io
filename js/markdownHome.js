@@ -42,10 +42,12 @@ async function renderIndex(articlesJsonPath, container) {
               <div class="article-image" ${imgStyle}></div>
               <div class="article-content">
                 <p class="article-date">${dateStr}</p>
+                <p class="article-date">${item.num_words} words</p>
                 <h2 class="article-title">${escapeHtml(
                   item.title || item.slug
                 )}</h2>
               </div>
+             
             </a>`;
           })
           .join("");
