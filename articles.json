@@ -1,8 +1,15 @@
 [
   {
+    "slug": "marty-supreme",
+    "title": "Marty Supreme",
+    "date": "2026-01-03",
+    "image": "/assets/zion.png",
+    "thumbnail": "/assets/zion.png"
+  },
+  {
     "slug": "what-is-wav",
     "title": "What is .wav?",
-    "date": "2026-01-03",
+    "date": "2026-01-02",
     "image": "/assets/zion.png",
     "thumbnail": "/assets/zion.png"
   },

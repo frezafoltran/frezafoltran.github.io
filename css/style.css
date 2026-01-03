@@ -160,6 +160,7 @@ input:checked + .slider:before {
 }
 
 .article-card {
+  display: flex;
   background: var(--card-bg);
   border-radius: 12px;
   overflow: hidden;
@@ -173,8 +174,10 @@ input:checked + .slider:before {
 }
 
 .article-image {
-  height: 180px;
-  background-size: cover;
+  width: 72px;
+  height: 72px;
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
 }
 
@@ -312,8 +315,8 @@ input:checked + .slider:before {
 .week-grid {
   display: grid;
   margin: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
 }
 
 .definition {
