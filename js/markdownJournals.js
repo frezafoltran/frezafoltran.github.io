@@ -67,7 +67,14 @@ async function renderArticle(mdPath, container) {
           fm.image_alt || title
         }" loading="lazy"/></div>`
       : "";
-    const profileLinks = fm.is_about_page ? `...` : "";
+    const profileLinks = fm.is_about_page
+      ? `
+         <div class="profile-links">
+          <a href="docs/resume.pdf" aria-label="Resume" title="Resume"><img src="/assets/profile.svg" alt="Resume" /></a>
+          <a href="https://www.linkedin.com/in/joao-foltran/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="https://github.com/frezafoltran" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+        </div>`
+      : "";
 
     const articleHtml = `
       <div class="article-page">
