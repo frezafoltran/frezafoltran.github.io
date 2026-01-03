@@ -34,11 +34,7 @@ Our ear decomposes sound into frequencies, and our brain abstracts:
 :::
 
 :::definition
-**Rhythmic Patterns**: We feel the "pulse". Like a heartbeat, the rhythm is recognizable whether it’s racing or resting because the spacing between beats stays proportional.
-:::
-
-:::definition
-**Harmonic Structure**: We "group" sounds. A computer sees 20 separate frequencies; we see a forest instead of 20 individual trees. We bundle notes together into a single "chord."
+**Rhythmic Patterns**: We recognize rhythm whether it’s racing or resting because the spacing between beats stays proportional.
 :::
 
 :::definition
