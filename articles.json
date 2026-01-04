@@ -1,11 +1,19 @@
 [
   {
+    "slug": "too-many-people",
+    "title": "Too many people",
+    "date": "2026-01-04",
+    "image": "/assets/sardine-subway.png",
+    "thumbnail": "/assets/sardine-subway.png",
+    "num_words": 0
+  },
+  {
     "slug": "sticking-to-a-purpose",
     "title": "Sticking to a purpose",
     "date": "2026-01-03",
-    "image": "/assets/zion.png",
+    "image": "",
     "thumbnail": "/assets/zion.png",
-    "num_words": 0
+    "num_words": 72
   },
   {
     "slug": "what-is-wav",
