@@ -1,5 +1,5 @@
 ---
-title: "Marty Supreme"
+title: "Sticking to a purpose"
 date: 2026-01-03
 thumbnail: "/assets/zion.png"
 image: "/assets/zion.png"

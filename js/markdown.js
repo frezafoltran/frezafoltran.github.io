@@ -92,6 +92,12 @@ function formatToDayOfYear(dateInput) {
   return `day ${dayOfYear} of ${year}`;
 }
 
+function formatToDay(dateInput) {
+  const { dayOfYear } = getDateCounters(dateInput);
+
+  return `day ${dayOfYear}`;
+}
+
 function escapeHtml(s) {
   return String(s).replace(
     /[&<>"']/g,
