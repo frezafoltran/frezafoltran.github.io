@@ -5,7 +5,9 @@ thumbnail: "/assets/chicken-subway.png"
 image: "/assets/chicken-subway.png"
 ---
 
-Music don't sound goof because it's a perfect composition of notes
+---
+
+Music don't sound good because it's a perfect composition of notes
 
 It grips to my ears because of its perfect imperfections.
 
