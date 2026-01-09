@@ -11,4 +11,4 @@ The king rat is not even hungry but wants more.
 
 The pleb rat tries to eat their own tail.
 
-The savy rat sees opportunity at dark.
+The savy rat sees opportunity at nighttime.
