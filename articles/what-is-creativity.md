@@ -4,12 +4,16 @@ date: 2026-01-16
 thumbnail: "/assets/zion.png"
 ---
 
-Is it the permission to be imperfect?
+Is creativity the permission to be imperfect?
 
-Creativity is really a trial and error process.
+Creativity is a process of trial and error.
 
-The process may start following wrong paths, but these are important because they allow exploration.
+It involves starting down paths that may be wrong and staying on them long enough to learn why.
 
-My grandpa was a truck driver who always ate at the same rest stop.
+These detours are not mistakes, they are how exploration and innovation happens.
 
-He never had a bad meal, but he also never got to try some ass slapping meals out there.
+My grandfather was a truck driver who always ate at the same rest stop.
+
+He never had a bad meal.
+
+But he also never discovered the truly ass slapping ones.
