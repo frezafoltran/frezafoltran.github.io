@@ -1,5 +1,21 @@
 [
   {
+    "slug": "am-i-an-artist",
+    "title": "Am I an artist?",
+    "date": "2026-01-21",
+    "image": "",
+    "thumbnail": "/assets/zion.png",
+    "num_words": 60
+  },
+  {
+    "slug": "a-good-day-at-work",
+    "title": "A good day at work",
+    "date": "2026-01-20",
+    "image": "",
+    "thumbnail": "/assets/zion.png",
+    "num_words": 40
+  },
+  {
     "slug": "today-i-dont-feel-like-doing-anything",
     "title": "Today I don't feel like doing anything",
     "date": "2026-01-19",
