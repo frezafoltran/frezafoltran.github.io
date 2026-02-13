@@ -4,7 +4,7 @@ frezafoltran.github.io
 
 # Start http server
 
-python -m http.server 8000
+python -m http.server 8001
 
 # Update article list
 

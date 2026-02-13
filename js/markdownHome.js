@@ -25,10 +25,9 @@ async function renderIndex(articlesJsonPath, container) {
       return acc;
     }, {});
 
-    // Render: One section per week
     container.innerHTML = Object.entries(groups)
       .map(([weekLabel, articles]) => {
-        const articleCards = articles
+        const articleRows = articles
           .map((item) => {
             const imgStyle = item.thumbnail
               ? `style="background-image:url('${item.thumbnail}')"`
@@ -36,29 +35,23 @@ async function renderIndex(articlesJsonPath, container) {
             const dateStr = formatToDay(item.date);
 
             return `
-            <a class="article-card" href="article.html?post=${encodeURIComponent(
-              item.slug
-            )}">
-              <div class="article-image" ${imgStyle}></div>
-              <div class="article-content">
-                <p class="article-date">${dateStr} | ${item.num_words} words</p>
-                <h2 class="article-title">${escapeHtml(
-                  item.title || item.slug
-                )}</h2>
+            <a class="article-row" href="article.html?post=${encodeURIComponent(item.slug)}">
+              <div class="row-thumb" ${imgStyle}></div>
+              <div class="row-content">
+                <h2 class="row-title">${escapeHtml(item.title || item.slug)}</h2>
+                <span class="row-meta">${dateStr} • ${item.num_words} words</span>
               </div>
-             
             </a>`;
           })
           .join("");
 
-        // Each week gets its own row and its own internal grid
         return `
-          <section class="week-row">
+          <section class="week-section">
             <header class="week-sticky-header">
               <h3>${weekLabel}</h3>
             </header>
-            <div class="week-grid">
-              ${articleCards}
+            <div class="week-list">
+              ${articleRows}
             </div>
           </section>`;
       })
