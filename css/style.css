@@ -16,6 +16,10 @@
   --header-height: 64px; /* Slightly taller for larger font */
 }
 
+[data-include="partials/header.html"] {
+  display: contents;
+}
+
 [data-theme="dark"] {
   --card-bg: #1e1e1e;
   --row-hover: #2a2a2a;
