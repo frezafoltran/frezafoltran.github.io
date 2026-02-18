@@ -1,11 +1,19 @@
 [
   {
+    "slug": "we-are-all-sales-people",
+    "title": "We are all sales people",
+    "date": "2026-02-18",
+    "image": "",
+    "thumbnail": "/assets/zion.png",
+    "num_words": 32
+  },
+  {
     "slug": "time-is-on-my-side",
     "title": "Time is on my side",
     "date": "2026-02-16",
     "image": "",
     "thumbnail": "/assets/zion.png",
-    "num_words": 0
+    "num_words": 28
   },
   {
     "slug": "balance-your-drugs",
