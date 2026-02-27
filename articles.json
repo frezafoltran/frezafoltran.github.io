@@ -1,5 +1,13 @@
 [
   {
+    "slug": "a-day-in-the-beach",
+    "title": "A day in the beach",
+    "date": "2026-02-27",
+    "image": "",
+    "thumbnail": "/assets/zion.png",
+    "num_words": 64
+  },
+  {
     "slug": "we-are-all-sales-people",
     "title": "We are all sales people",
     "date": "2026-02-18",
