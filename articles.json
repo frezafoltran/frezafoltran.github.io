@@ -1,5 +1,13 @@
 [
   {
+    "slug": "life-goes-on",
+    "title": "Life goes on",
+    "date": "2026-03-04",
+    "image": "",
+    "thumbnail": "/assets/zion.png",
+    "num_words": 39
+  },
+  {
     "slug": "a-day-in-the-beach",
     "title": "A day in the beach",
     "date": "2026-02-27",
