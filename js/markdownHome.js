@@ -27,16 +27,17 @@ async function renderIndex(articlesJsonPath, container) {
 
     container.innerHTML = Object.entries(groups)
       .map(([weekLabel, articles]) => {
+        // Pick the thumbnail from the first article of the week
+        const firstArticle = articles[0];
+        const weekThumb = firstArticle.thumbnail
+          ? `<img src="${firstArticle.thumbnail}" class="week-mini-thumb" alt="">`
+          : "";
+
         const articleRows = articles
           .map((item) => {
-            const imgStyle = item.thumbnail
-              ? `style="background-image:url('${item.thumbnail}')"`
-              : "";
             const dateStr = formatToDay(item.date);
-
             return `
-            <a class="article-row" href="article.html?post=${encodeURIComponent(item.slug)}">
-              <div class="row-thumb" ${imgStyle}></div>
+            <a class="article-row no-thumb" href="article.html?post=${encodeURIComponent(item.slug)}">
               <div class="row-content">
                 <h2 class="row-title">${escapeHtml(item.title || item.slug)}</h2>
                 <span class="row-meta">${dateStr} • ${item.num_words} words</span>
@@ -48,7 +49,10 @@ async function renderIndex(articlesJsonPath, container) {
         return `
           <section class="week-section">
             <header class="week-sticky-header">
-              <h3>${weekLabel}</h3>
+              <div class="header-flex">
+                ${weekThumb}
+                <h3>${weekLabel}</h3>
+              </div>
             </header>
             <div class="week-list">
               ${articleRows}
