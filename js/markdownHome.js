@@ -1,5 +1,4 @@
 async function renderIndex(articlesJsonPath, container) {
-  // Helpers for date calculations
   const getDayOfYear = (date) => {
     const start = new Date(date.getFullYear(), 0, 0);
     const diff = date - start;
@@ -7,35 +6,32 @@ async function renderIndex(articlesJsonPath, container) {
     return Math.floor(diff / oneDay);
   };
 
+  const isLeapYear = (year) =>
+    (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+
   try {
     const res = await fetch(articlesJsonPath);
-    if (!res.ok) {
-      container.innerHTML = `<p>Failed to load articles.json</p>`;
-      return;
-    }
     const list = await res.json();
-    if (!Array.isArray(list) || list.length === 0) {
-      container.innerHTML = `<p>No articles yet.</p>`;
+    if (!list || list.length === 0) {
+      container.innerHTML = `<p>No articles found.</p>`;
       return;
     }
 
-    // Sort descending
     list.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 
-    // Group by Year and create a Map of "Active Days" per year
+    // Grouping logic
     const yearGroups = {};
-    const activeDaysPerYear = {};
+    const dayCounts = {};
 
     list.forEach((item) => {
       const d = new Date(item.date);
       const year = d.getFullYear();
       const dayIndex = getDayOfYear(d);
+      const key = `${year}-${dayIndex}`;
 
       if (!yearGroups[year]) yearGroups[year] = [];
       yearGroups[year].push(item);
-
-      if (!activeDaysPerYear[year]) activeDaysPerYear[year] = new Set();
-      activeDaysPerYear[year].add(dayIndex);
+      dayCounts[key] = (dayCounts[key] || 0) + 1;
     });
 
     const sortedYears = Object.keys(yearGroups).sort((a, b) => b - a);
@@ -43,56 +39,57 @@ async function renderIndex(articlesJsonPath, container) {
     container.innerHTML = sortedYears
       .map((year) => {
         const articles = yearGroups[year];
-        const activeSet = activeDaysPerYear[year];
+        const totalDaysInYear = isLeapYear(parseInt(year)) ? 366 : 365;
 
         const articleRows = articles
           .map((item) => {
             const d = new Date(item.date);
             const currentDayIndex = getDayOfYear(d);
+            const percentYear = (
+              (currentDayIndex / totalDaysInYear) *
+              100
+            ).toFixed(1);
             const dateStr = d.toLocaleDateString(undefined, {
               month: "short",
               day: "numeric",
             });
 
-            // Generate bricks for days elapsed up to THIS article
             let bricksHtml = "";
             for (let i = 1; i <= currentDayIndex; i++) {
-              // If this day has an article in the master list, color it
-              const isActive = activeSet.has(i) ? "active" : "";
-              // Highlight the specific day of THIS row
+              const count = dayCounts[`${year}-${i}`] || 0;
+              let level = 0;
+              if (count > 0) level = Math.min(count, 4);
               const isCurrent = i === currentDayIndex ? "current" : "";
-              bricksHtml += `<div class="brick ${isActive} ${isCurrent}"></div>`;
+              bricksHtml += `<div class="brick lvl-${level} ${isCurrent}"></div>`;
             }
 
             return `
-            <div class="article-group">
-              <div class="brick-wrapper">
-                <div class="brick-container">${bricksHtml}</div>
-              </div>
-              <a class="article-row no-thumb" href="article.html?post=${encodeURIComponent(item.slug)}">
-                <div class="row-content">
-                  <h2 class="row-title">${item.title || item.slug}</h2>
-                  <span class="row-meta">${dateStr} • ${item.num_words || 0} words</span>
-                </div>
-              </a>
-            </div>`;
+        <div class="article-group">
+          <div class="brick-wrapper">
+            <div class="brick-container">${bricksHtml}</div>
+            <span class="percent-label">${percentYear}%</span>
+          </div>
+          <a class="article-row no-thumb" href="article.html?post=${encodeURIComponent(item.slug)}">
+            <h2 class="row-title">${item.title || item.slug}</h2>
+            <span class="row-meta">${dateStr} • ${item.num_words || 0} words</span>
+          </a>
+        </div>`;
           })
           .join("");
 
         return `
-          <section class="year-section">
-            <header class="year-sticky-header">
-              <h2>${year}</h2>
-            </header>
-            <div class="year-list">
-              ${articleRows}
-            </div>
-          </section>`;
+        <section class="year-section">
+          <header class="year-sticky-header">
+            <h2>${year}</h2>
+          </header>
+          <div class="year-list">
+            ${articleRows}
+          </div>
+        </section>`;
       })
       .join("");
   } catch (err) {
-    container.innerHTML = `<p>Error rendering index: ${err}</p>`;
+    container.innerHTML = `<p>Error: ${err}</p>`;
   }
 }
-
 window.renderIndex = renderIndex;
