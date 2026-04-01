@@ -1,5 +1,12 @@
 async function renderIndex(articlesJsonPath, container) {
-  await ensureLibs();
+  // Helpers for date calculations
+  const getDayOfYear = (date) => {
+    const start = new Date(date.getFullYear(), 0, 0);
+    const diff = date - start;
+    const oneDay = 1000 * 60 * 60 * 24;
+    return Math.floor(diff / oneDay);
+  };
+
   try {
     const res = await fetch(articlesJsonPath);
     if (!res.ok) {
@@ -12,49 +19,72 @@ async function renderIndex(articlesJsonPath, container) {
       return;
     }
 
+    // Sort descending
     list.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 
-    const groups = list.reduce((acc, item) => {
-      const counters = getDateCounters(item.date);
-      const weekKey = counters
-        ? `Week ${counters.weekOfYear}, ${counters.year}`
-        : "Unknown Date";
+    // Group by Year and create a Map of "Active Days" per year
+    const yearGroups = {};
+    const activeDaysPerYear = {};
 
-      if (!acc[weekKey]) acc[weekKey] = [];
-      acc[weekKey].push(item);
-      return acc;
-    }, {});
+    list.forEach((item) => {
+      const d = new Date(item.date);
+      const year = d.getFullYear();
+      const dayIndex = getDayOfYear(d);
 
-    container.innerHTML = Object.entries(groups)
-      .map(([weekLabel, articles]) => {
-        // Pick the thumbnail from the first article of the week
-        const firstArticle = articles[0];
-        const weekThumb = firstArticle.thumbnail
-          ? `<img src="${firstArticle.thumbnail}" class="week-mini-thumb" alt="">`
-          : "";
+      if (!yearGroups[year]) yearGroups[year] = [];
+      yearGroups[year].push(item);
+
+      if (!activeDaysPerYear[year]) activeDaysPerYear[year] = new Set();
+      activeDaysPerYear[year].add(dayIndex);
+    });
+
+    const sortedYears = Object.keys(yearGroups).sort((a, b) => b - a);
+
+    container.innerHTML = sortedYears
+      .map((year) => {
+        const articles = yearGroups[year];
+        const activeSet = activeDaysPerYear[year];
 
         const articleRows = articles
           .map((item) => {
-            const dateStr = formatToDay(item.date);
+            const d = new Date(item.date);
+            const currentDayIndex = getDayOfYear(d);
+            const dateStr = d.toLocaleDateString(undefined, {
+              month: "short",
+              day: "numeric",
+            });
+
+            // Generate bricks for days elapsed up to THIS article
+            let bricksHtml = "";
+            for (let i = 1; i <= currentDayIndex; i++) {
+              // If this day has an article in the master list, color it
+              const isActive = activeSet.has(i) ? "active" : "";
+              // Highlight the specific day of THIS row
+              const isCurrent = i === currentDayIndex ? "current" : "";
+              bricksHtml += `<div class="brick ${isActive} ${isCurrent}"></div>`;
+            }
+
             return `
-            <a class="article-row no-thumb" href="article.html?post=${encodeURIComponent(item.slug)}">
-              <div class="row-content">
-                <h2 class="row-title">${escapeHtml(item.title || item.slug)}</h2>
-                <span class="row-meta">${dateStr} • ${item.num_words} words</span>
+            <div class="article-group">
+              <div class="brick-wrapper">
+                <div class="brick-container">${bricksHtml}</div>
               </div>
-            </a>`;
+              <a class="article-row no-thumb" href="article.html?post=${encodeURIComponent(item.slug)}">
+                <div class="row-content">
+                  <h2 class="row-title">${item.title || item.slug}</h2>
+                  <span class="row-meta">${dateStr} • ${item.num_words || 0} words</span>
+                </div>
+              </a>
+            </div>`;
           })
           .join("");
 
         return `
-          <section class="week-section">
-            <header class="week-sticky-header">
-              <div class="header-flex">
-                ${weekThumb}
-                <h3>${weekLabel}</h3>
-              </div>
+          <section class="year-section">
+            <header class="year-sticky-header">
+              <h2>${year}</h2>
             </header>
-            <div class="week-list">
+            <div class="year-list">
               ${articleRows}
             </div>
           </section>`;

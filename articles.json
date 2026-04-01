@@ -1,5 +1,13 @@
 [
   {
+    "slug": "claude-greedy-af",
+    "title": "LLMs are greedy af",
+    "date": "2026-04-01",
+    "image": "",
+    "thumbnail": "/assets/zion.png",
+    "num_words": 38
+  },
+  {
     "slug": "life-goes-on",
     "title": "Life goes on",
     "date": "2026-03-04",

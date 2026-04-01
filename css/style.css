@@ -289,3 +289,89 @@ input:checked + .slider:before {
 .article-row.no-thumb .row-content {
   flex: 1; /* Ensures title and meta stretch to fill the row */
 }
+
+/* --- Year Sticky Header --- */
+.year-section {
+  margin-bottom: 4rem;
+}
+
+.year-sticky-header {
+  position: sticky;
+  top: var(--header-height);
+  z-index: 900;
+  background: var(--bg-color);
+  padding: 1.5rem 0 0.5rem 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+}
+
+.year-sticky-header h2 {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-color);
+  letter-spacing: -1px;
+}
+
+/* --- Brick Layout --- */
+.article-group {
+  margin-bottom: 1.2rem;
+  border-radius: 12px;
+  transition: background 0.2s ease;
+}
+
+.brick-wrapper {
+  padding: 8px 12px 2px 12px;
+}
+
+.brick-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.brick {
+  width: 5px;
+  height: 5px;
+  background-color: var(--subtle-text);
+  opacity: 0.15; /* Default: uncolored/empty days */
+  border-radius: 1px;
+}
+
+.brick.active {
+  background-color: var(--accent-color);
+  opacity: 0.4; /* Days with text but not this specific post */
+}
+
+.brick.current {
+  opacity: 1; /* The specific day of the post */
+  transform: scale(1.2);
+  box-shadow: 0 0 4px var(--accent-color);
+}
+
+/* --- Row Cleanup --- */
+.article-row.no-thumb {
+  height: auto;
+  padding: 8px 12px 12px 12px;
+}
+
+.row-title {
+  font-size: 1.3rem;
+  margin: 0 0 4px 0;
+}
+
+.row-meta {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+@media (max-width: 650px) {
+  .year-sticky-header h2 {
+    font-size: 1.6rem;
+  }
+  .brick {
+    width: 4px;
+    height: 4px;
+    gap: 2px;
+  }
+}
